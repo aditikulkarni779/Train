@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "vb/detection_record.schema.json",
+  "title": "Detection record (internal, one per voted flag)",
+  "description": "Emitted by specialists, consumed by voting_manager. Every record inherits the coordinate spine stamp.",
+  "type": "object",
+  "required": ["coach_index", "coach_type", "zone", "class", "conf", "tier"],
+  "properties": {
+    "coach_index": { "type": "integer" },
+    "coach_type": { "type": "string", "enum": ["LHB", "ICF", "VB-motor", "VB-trailer"] },
+    "zone": { "type": "string", "enum": ["P1", "P2", "P3"] },
+    "axle_id": { "type": ["integer", "null"] },
+    "side": { "type": ["string", "null"], "enum": ["L", "R", null] },
+    "view": { "type": ["string", "null"], "enum": ["entry", "exit", null] },
+    "longitudinal_position_mm": { "type": "number", "description": "from encoder, defines the vote cell" },
+    "class": { "type": "string", "description": "e.g. wheel_shelling, crack, corrosion, fastener_missing, spring_broken, component_missing" },
+    "conf": { "type": "number", "minimum": 0, "maximum": 1 },
+    "mask_ref": { "type": ["string", "null"], "description": "seg mask asset for seg classes" },
+    "votes": { "type": "integer", "description": "k-of-n count after temporal accumulation" },
+    "tier": { "type": "string", "enum": ["cosmetic", "structural", "safety"], "description": "degrade order; safety never dropped" },
+    "source_model": { "type": "string", "description": "MLflow family+version that emitted this" }
+  }
+}

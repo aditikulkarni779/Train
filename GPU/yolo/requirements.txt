@@ -1,0 +1,12 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+ultralytics>=8.3.40
+opencv-python-headless==4.11.0.86
+numpy>=2.1
+requests==2.32.3
+psycopg2-binary==2.9.10
+cloudinary==1.40.0
+python-dotenv==1.0.1
+# PyTorch: install separately matching your CUDA version
+# pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124

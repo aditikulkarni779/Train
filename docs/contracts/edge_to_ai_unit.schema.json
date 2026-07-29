@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "vb/edge_to_ai_unit.schema.json",
+  "title": "Edge -> AI-unit upload envelope (per coach)",
+  "description": "HYBRID input contract. Bulk = downsampled JPEG context (drives gate + coarse detect + geometry). safety_crops = lossless full-res crops ONLY inside edge-computed safety ROIs (drives fine seg at first-pipeline fidelity). Total target ~55-70 MB/train. One envelope per coach; a train = array of these.",
+  "type": "object",
+  "required": ["coach_index", "coach_type", "spine", "ptp_t0", "zones", "qa"],
+  "properties": {
+    "coach_index": { "type": "integer", "minimum": 0, "description": "axle-count-derived index = coordinate spine key. NEVER OCR." },
+    "coach_number": { "type": ["string", "null"], "description": "OCR label, may be null/late" },
+    "coach_type": { "type": "string", "enum": ["LHB", "ICF", "VB-motor", "VB-trailer"] },
+    "ocr_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "spine": {
+      "type": "object",
+      "required": ["source", "axle_ids", "encoder_positions_mm"],
+      "properties": {
+        "source": { "type": "string", "enum": ["axle_count", "formation_fallback"] },
+        "axle_ids": { "type": "array", "items": { "type": "integer" } },
+        "encoder_positions_mm": { "type": "array", "items": { "type": "number" }, "description": "longitudinal position from encoder counts, NOT wall-clock" }
+      }
+    },
+    "ptp_t0": { "type": "string", "format": "date-time", "description": "PTP frame anchor; enables cross-zone fusion. Null => per-zone only (risk R5)." },
+    "zones": {
+      "type": "object",
+      "description": "One block per zone. bulk_ref = downsampled JPEG. safety_crops = lossless, tiny area.",
+      "properties": {
+        "P1": { "$ref": "#/definitions/zone_side" },
+        "P2": { "$ref": "#/definitions/zone_belly" },
+        "P3": { "$ref": "#/definitions/zone_bogie" }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "required": ["dropped_regions"],
+      "properties": {
+        "dropped_regions": { "type": "array", "items": { "$ref": "#/definitions/bbox" }, "description": "marked data_unavailable, never silently distorted" },
+        "blur": { "type": "number" }, "exposure_ok": { "type": "boolean" }, "glare": { "type": "number" }
+      }
+    }
+  },
+  "definitions": {
+    "bbox": { "type": "array", "items": { "type": "number" }, "minItems": 4, "maxItems": 4, "description": "[x,y,w,h] in bulk-image pixel coords" },
+    "asset": {
+      "type": "object",
+      "required": ["ref", "compression", "px_w", "px_h"],
+      "properties": {
+        "ref": { "type": "string", "description": "local NVMe path or shared-mem handle (data already on-device, no upload)" },
+        "compression": { "type": "string", "enum": ["jpeg_q90", "jpeg_q85", "lossless_png", "lossless_tiff"] },
+        "px_w": { "type": "integer" }, "px_h": { "type": "integer" },
+        "downsample_factor": { "type": "number", "description": "vs native capture; 1.0 = full res (safety crops)" }
+      }
+    },
+    "zone_side": {
+      "type": "object",
+      "required": ["bulk_ref"],
+      "properties": {
+        "bulk_ref": { "$ref": "#/definitions/asset", "description": "downsampled side panorama, jpeg_q90 (parts >=15mm survive)" },
+        "safety_crops": { "type": "array", "items": { "$ref": "#/definitions/asset" }, "description": "usually empty for P1 (coarse)" }
+      }
+    },
+    "zone_belly": {
+      "type": "object",
+      "required": ["bulk_ref", "roi_candidates"],
+      "properties": {
+        "bulk_ref": { "$ref": "#/definitions/asset", "description": "downsampled belly strip, drives PatchCore anomaly gate" },
+        "roi_candidates": { "type": "array", "items": { "$ref": "#/definitions/bbox" }, "description": "edge anomaly pre-flag; boxes where lossless crops were cut" },
+        "safety_crops": { "type": "array", "items": { "$ref": "#/definitions/asset" }, "description": "LOSSLESS crops inside roi_candidates -> crack/corrosion-seg fidelity (contract fix, doc S1)" }
+      }
+    },
+    "zone_bogie": {
+      "type": "object",
+      "required": ["bulk_ref", "wheel_crops"],
+      "properties": {
+        "bulk_ref": { "$ref": "#/definitions/asset", "description": "downsampled bogie frames, drives detect gate" },
+        "wheel_crops": {
+          "type": "array",
+          "description": "LOSSLESS per-wheel crops, keyed to axle+side+view; feed log-polar wheel-seg",
+          "items": {
+            "allOf": [ { "$ref": "#/definitions/asset" } ],
+            "type": "object",
+            "properties": {
+              "axle_id": { "type": "integer" },
+              "side": { "type": "string", "enum": ["L", "R"] },
+              "view": { "type": "string", "enum": ["entry", "exit"] },
+              "wheel_diameter_mm": { "type": "number", "description": "known Ø -> seed log-polar circle, NOT blind Hough" }
+            }
+          }
+        },
+        "slot_crops": { "type": "array", "items": { "$ref": "#/definitions/asset" }, "description": "LOSSLESS per-bracket-slot crops -> fastener slot-occupancy" }
+      }
+    }
+  }
+}

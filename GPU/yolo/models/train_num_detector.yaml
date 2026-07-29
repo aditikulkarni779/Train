@@ -1,0 +1,9 @@
+path: /content/drive/MyDrive/combined_datasetocr2
+train: train/images
+val: valid/images
+nc: 4
+names:
+- Boogie
+- Car Type
+- Engine
+- gap

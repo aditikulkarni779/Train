@@ -1,0 +1,45 @@
+session_name: "Session_SmokeTest"
+output_folder: "./output"
+
+cameras:
+  - name: "ocr_cam"
+    source: "./sample_videos/ocr_camera.mp4"
+    camera_type: "ocr"
+    target_fps: 5.0
+  - name: "cam1"
+    source: "./sample_videos/cam1.mp4"
+    camera_type: "component"
+    target_fps: 5.0
+  - name: "cam2"
+    source: "./sample_videos/cam2.mp4"
+    camera_type: "component"
+    target_fps: 5.0
+
+ring_buffer_size: 300
+ring_buffer_duration_s: 30.0
+preprocessing_thread_count: 2
+resize_width: 320
+resize_height: 240
+blur_score_threshold: 5.0
+
+yolo_service_url: "http://127.0.0.1:5002"
+yolo_request_timeout_s: 2.0
+
+gap_confidence_threshold: 0.4
+gap_cluster_window_ms: 800.0
+
+ocr_confidence_threshold: 0.4
+ocr_camera_sample_every_n: 1
+
+stitch_camera_top: "cam1"
+stitch_camera_bottom: "cam2"
+stitch_pair_epsilon_ms: 300.0
+stitch_overlap_ratio: 0.15
+stitch_use_feature_refinement: false
+
+detection_confidence_threshold: 0.35
+
+enable_visualization: false
+visualization_refresh_ms: 500
+
+late_ocr_grace_period_ms: 5000.0

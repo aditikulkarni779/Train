@@ -1,0 +1,19 @@
+# pinned <=4.6.0.66: paddleocr 2.7.3 hard-requires this range (opencv-python<=4.6.0.66)
+opencv-python<=4.6.0.66
+numpy>=1.24.0,<2
+PyYAML>=6.0
+requests>=2.31.0
+pytest>=7.4.0
+
+# GPU/ocr's real engine (services/ocr_engine_adapter.py imports it directly).
+# Optional: if not installed, OCR degrades gracefully (identity_unresolved)
+# rather than crashing — see services/ocr_engine_adapter.py OCR_ENGINE_AVAILABLE.
+# numpy pinned <2 above: paddlepaddle's CPU wheel is compiled against the
+# numpy<2 ABI and raises at import otherwise (RuntimeError: module compiled
+# against ABI version 0x1000009 but this version of numpy is 0x2000000).
+# pinned to 2.6.2, NOT >=3.0: paddleocr 2.7.3's inference graphs break on
+# paddlepaddle 3.x's OneDNN conv backend (NotFoundError: OneDnnContext does
+# not have the input Filter) — 2.6.2 is the last version paddleocr 2.x was
+# actually built/tested against.
+paddlepaddle==2.6.2
+paddleocr==2.7.3

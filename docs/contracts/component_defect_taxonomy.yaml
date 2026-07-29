@@ -1,0 +1,86 @@
+# AUTHORITATIVE component / defect / camera taxonomy
+# Source: Comprehensive MVIS Defect Matrix, EOI RDSO-TEST0PROJ(MVIS)/1/2025
+#         + MVIS_Component_Visibility_Matrix.docx
+# This is the LABEL SCHEMA the detectors train against and the manifest checks against.
+# Camera mapping (per operator, unchanged): CAM1,2 in source => SIDE zone = cams 1-4 (P1)
+#                                           underbelly (UB)   => zone = cams 5-7 (P2)
+#                                           UC/bogie/wheel     => cams 8-11 (P3, from prior plans; not in this source)
+# zone: side=P1  ub=P2  uc=P3
+# tier: safety | structural | cosmetic   (degrade order; safety never dropped)
+# sensing: any special sensor need beyond RGB detect (color / metrology / geometry / thermal)
+# state_model: how the defect STATE is decided after the component is localized
+
+meta:
+  source_notice: "RDSO-TEST0PROJ(MVIS)/1/2025"
+  coach_types: [LHB, ICF]   # + coach_type classifier picks manifest; formation fallback if OCR low
+  manifest_is_coach_type_conditional: true
+  data_quality_flags:
+    - "ICF Pull Rod & Hand Brake: source reuses 'J-Bracket Missing/Hanging' defect text (copy-paste error). Treat as {missing,hanging} until corrected."
+    - "ICF J-Bracket, Truss Bar, Pull Rod, Hand Brake: NO target camera assigned in source -> coverage gap, see open_questions."
+    - "Anti-Roll Bar (LHB) & Air Reservoir mounting: 'actual image from camera not available' -> label-scarce, anomaly/pseudo-label first."
+
+# ─────────────────────────────  LHB  ─────────────────────────────
+LHB:
+  side:   # cams 1-4
+    primary_coil_spring:      { defects: [displaced, broken, missing], tier: structural, cameras: [1,2], state_model: crop_classify }
+    secondary_coil_spring:    { defects: [displaced, broken, missing], tier: structural, cameras: [1,2], state_model: crop_classify,
+                                note: "some LHB use AIR SUSPENSION instead of coil spring -> optional extra class air_suspension_defect (see open_questions Q5)" }
+    fiba_indicator:           { defects: [red_condition], tier: structural, cameras: [1,2], sensing: color, state_model: color_classify,
+                                note: "DECIDED Q2: side bank is COLOR (RGB) -> p1_fiba_color viable on RGB crop" }
+    control_arm:              { defects: [bolt_broken, bolt_missing, lower_jaw_broken, lower_jaw_missing], tier: safety, cameras: [1,2], state_model: crop_classify }
+    brake_control_module:     { defects: [securing_broken, securing_hanging], tier: structural, cameras: [1,2], state_model: crop_classify }
+    footboard:                { defects: [broken, hanging], tier: cosmetic, cameras: [1,2], state_model: crop_classify }
+    axle_box_cover:           { defects: [missing, dislocated], tier: structural, cameras: [1,2], state_model: presence_plus_classify }
+    cbc:                      { defects: [damaged, component_missing], tier: structural, cameras: [2], state_model: crop_classify }
+    battery_box:              { defects: [securing_broken, securing_hanging], tier: structural, cameras: [2], state_model: crop_classify }
+    iv_coupler_sagging:       { defects: [sagging], tier: structural, cameras: [2], sensing: geometry, state_model: pose_or_regression,
+                                note: "sag = geometric droop vs reference line" }
+    yaw_damper:               { defects: [missing, hanging], tier: structural, cameras: [2], state_model: presence_plus_classify }
+  ub:     # cams 5-7 (underbelly)
+    brake:                    { defects: [binding], tier: safety, cameras: [5,6,7], state_model: crop_classify,
+                                note: "binding visible ONLY in UB, not side" }
+    bio_tank:                 { defects: [leaking, damaged, securing_broken, securing_hanging], tier: structural, cameras: [1,2,5,6,7], state_model: crop_classify }
+    under_slung_tank:         { defects: [securing_broken, securing_hanging], tier: structural, cameras: [1,2,5,6,7], state_model: crop_classify,
+                                note: "AC coach water tank, near FIBA; identify by filling nozzle" }
+    air_reservoir_tank:       { defects: [securing_broken, securing_hanging], tier: structural, cameras: [5,6,7], state_model: crop_classify, note: "check mounting frame" }
+    cbc_uncoupling_device:    { defects: [broken, hanging], tier: structural, cameras: [1,2,5,6,7], state_model: crop_classify }
+    wheel_shelling:           { defects: [len_gt_40mm], depth_defect: depth_gt_1p5mm_OUT_OF_AI_SCOPE, tier: safety, cameras: [5,6,7], sensing: none, state_model: wheel_seg_length,
+                                note: "DECIDED Q1: AI reports shelling LENGTH (>40mm) only. DEPTH>1.5mm is a manual / separate-system check, NOT produced by this pipeline. Report worst-length + flag for manual depth adjudication." }
+    brake_pad_disc:           { defects: [pad_missing, disc_cracked], tier: safety, cameras: [5,6,7], state_model: presence_plus_seg }
+    anti_roll_bar:            { defects: [missing, hanging], tier: structural, cameras: [5,6,7], state_model: presence_plus_classify, note: "no camera image yet -> label scarce" }
+
+# ─────────────────────────────  ICF  ─────────────────────────────
+ICF:
+  side:   # cams 1-4
+    axle_box_cover:           { defects: [missing, dislocated_hanging, bolt_missing], tier: structural, cameras: [1,2], state_model: presence_plus_classify }
+    brake_binding:            { defects: [sparking], tier: safety, cameras: [2], sensing: color, state_model: event_classify,
+                                note: "DECIDED Q2: RGB confirmed -> bright-spark event classifier on RGB. (Thermal would add margin but not required.)" }
+    bio_tank:                 { defects: [leaking, damaged], tier: structural, cameras: [2], state_model: crop_classify }
+    buffer_assembly:          { defects: [height_too_low, height_mismatch], tier: structural, cameras: [2], sensing: metrology, state_model: height_measure,
+                                spec: "DECIDED Q3: build CALIBRATED measurement head. rail-to-buffer-center height, max empty 1105mm / min loaded 1030mm on straight track. Needs per-site scale calibration." }
+    brake_block:              { defects: [missing], tier: safety, cameras: [2], state_model: presence }
+    iv_coupler_sagging:       { defects: [sagging], tier: structural, cameras: [2], sensing: geometry, state_model: pose_or_regression }
+    water_tank_securing:      { defects: [broken, hanging], tier: structural, cameras: [2], state_model: crop_classify }
+    equalizing_stay_rod:      { defects: [missing, hanging], tier: structural, cameras: [2], state_model: presence_plus_classify, note: "possibly UB too" }
+    secondary_suspension_hanger: { defects: [missing, hanging], tier: structural, cameras: [2], state_model: presence_plus_classify, note: "possibly UB too" }
+    secondary_vertical_damper:   { defects: [missing, hanging], tier: structural, cameras: [2], state_model: presence_plus_classify, note: "possibly UB too" }
+  ub:     # cams 5-7
+    sab_regulator:            { defects: [missing, hanging], tier: safety, cameras: [5,6,7], state_model: presence_plus_classify, note: "SAB = Svenska Aktiebolaget Broms brake regulator" }
+    auxiliary_reservoir_securing: { defects: [broken, hanging], tier: structural, cameras: [5,6,7], state_model: crop_classify }
+  no_camera_assigned:   # coverage GAP in source -> manifest lists as data_unavailable until sensor assigned
+    j_bracket:                { defects: [missing, hanging], tier: structural, cameras: [], state_model: none, status: coverage_gap }
+    truss_bar:                { defects: [missing, hanging], tier: structural, cameras: [], state_model: none, status: coverage_gap }
+    pull_rod:                 { defects: [missing, hanging], tier: structural, cameras: [], state_model: none, status: coverage_gap, note: "source defect text mislabeled J-Bracket" }
+    hand_brake:               { defects: [missing, hanging], tier: structural, cameras: [], state_model: none, status: coverage_gap, note: "source defect text mislabeled J-Bracket" }
+
+# state_model vocabulary (how each maps to models in the pipelines)
+state_models:
+  presence:                "shared backbone + zone head detect; 0 hits across >= missing_min_views => missing"
+  presence_plus_classify:  "detect to localize, then crop-classifier for {dislocated/hanging/broken}"
+  crop_classify:           "detect to localize, then p{zone}_damage crop-classifier for defect state"
+  color_classify:          "crop-classifier on COLOR crop (FIBA red). Requires color sensor."
+  event_classify:          "bright/thermal event classifier (sparking). Sensor-dependent."
+  pose_or_regression:      "keypoint/regression head for sag droop vs reference geometry"
+  height_measure:          "metrology: calibrated rail-reference -> buffer-center height in mm; threshold 1030-1105"
+  wheel_seg_plus_geometry: "P3 wheel-seg (log-polar) for shelling %/length; DEPTH via geometry/3D wheel system"
+  presence_plus_seg:       "detect pad/disc, seg for crack; pad absence => missing"

@@ -1,0 +1,10 @@
+# Pipeline logic + tests
+numpy
+opencv-python
+pyyaml
+pytest
+
+# Model training/serving (optional; imported lazily by GPU/yolo trainers)
+# ultralytics
+# anomalib
+# torch

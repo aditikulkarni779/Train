@@ -1,0 +1,215 @@
+Collecting opencv-python<=4.6.0.66
+  Downloading opencv_python-4.6.0.66-cp36-abi3-win_amd64.whl (35.6 MB)
+     -------------------------------------- 35.6/35.6 MB 904.7 kB/s eta 0:00:00
+Collecting numpy<2,>=1.24.0
+  Using cached numpy-1.26.4-cp310-cp310-win_amd64.whl (15.8 MB)
+Collecting PyYAML>=6.0
+  Using cached pyyaml-6.0.3-cp310-cp310-win_amd64.whl (158 kB)
+Collecting requests>=2.31.0
+  Using cached requests-2.34.2-py3-none-any.whl (73 kB)
+Collecting pytest>=7.4.0
+  Using cached pytest-9.1.1-py3-none-any.whl (386 kB)
+Collecting paddlepaddle>=3.0.0
+  Using cached paddlepaddle-3.3.1-cp310-cp310-win_amd64.whl (104.8 MB)
+Collecting paddleocr==2.7.3
+  Using cached paddleocr-2.7.3-py3-none-any.whl (780 kB)
+Collecting openpyxl
+  Using cached openpyxl-3.1.5-py2.py3-none-any.whl (250 kB)
+Collecting cython
+  Downloading cython-3.2.8-cp310-cp310-win_amd64.whl (2.8 MB)
+     ---------------------------------------- 2.8/2.8 MB 467.1 kB/s eta 0:00:00
+Collecting imgaug
+  Using cached imgaug-0.4.0-py2.py3-none-any.whl (948 kB)
+Collecting fonttools>=4.24.0
+  Using cached fonttools-4.63.0-cp310-cp310-win_amd64.whl (1.6 MB)
+Collecting lxml
+  Downloading lxml-6.1.1-cp310-cp310-win_amd64.whl (4.0 MB)
+     ---------------------------------------- 4.0/4.0 MB 476.3 kB/s eta 0:00:00
+Collecting Pillow>=10.0.0
+  Downloading pillow-12.3.0-cp310-cp310-win_amd64.whl (7.2 MB)
+     ---------------------------------------- 7.2/7.2 MB 348.3 kB/s eta 0:00:00
+Collecting fire>=0.3.0
+  Using cached fire-0.7.1-py3-none-any.whl (115 kB)
+Collecting shapely
+  Using cached shapely-2.1.2-cp310-cp310-win_amd64.whl (1.7 MB)
+Collecting visualdl
+  Downloading visualdl-2.5.3-py3-none-any.whl (6.3 MB)
+     ---------------------------------------- 6.3/6.3 MB 310.5 kB/s eta 0:00:00
+Collecting rapidfuzz
+  Downloading rapidfuzz-3.14.5-cp310-cp310-win_amd64.whl (1.5 MB)
+     ---------------------------------------- 1.5/1.5 MB 458.9 kB/s eta 0:00:00
+Collecting beautifulsoup4
+  Downloading beautifulsoup4-4.15.0-py3-none-any.whl (109 kB)
+     ------------------------------------ 109.9/109.9 kB 533.1 kB/s eta 0:00:00
+Collecting scikit-image
+  Using cached scikit_image-0.25.2-cp310-cp310-win_amd64.whl (12.8 MB)
+Collecting opencv-contrib-python<=4.6.0.66
+  Downloading opencv_contrib_python-4.6.0.66-cp36-abi3-win_amd64.whl (42.5 MB)
+     -------------------------------------- 42.5/42.5 MB 478.0 kB/s eta 0:00:00
+Collecting pyclipper
+  Using cached pyclipper-1.4.0-cp310-cp310-win_amd64.whl (104 kB)
+Collecting lmdb
+  Downloading lmdb-2.3.0-cp310-cp310-win_amd64.whl (115 kB)
+     ------------------------------------ 115.3/115.3 kB 353.8 kB/s eta 0:00:00
+Collecting tqdm
+  Downloading tqdm-4.68.4-py3-none-any.whl (676 kB)
+     ------------------------------------ 676.6/676.6 kB 150.7 kB/s eta 0:00:00
+Collecting premailer
+  Downloading premailer-3.10.0-py2.py3-none-any.whl (19 kB)
+Collecting python-docx
+  Downloading python_docx-1.2.0-py3-none-any.whl (252 kB)
+     ------------------------------------ 253.0/253.0 kB 596.4 kB/s eta 0:00:00
+Collecting pdf2docx
+  Downloading pdf2docx-0.5.13-py3-none-any.whl (123 kB)
+     ------------------------------------ 123.9/123.9 kB 404.4 kB/s eta 0:00:00
+Collecting attrdict
+  Using cached attrdict-2.0.1-py2.py3-none-any.whl (9.9 kB)
+Collecting charset_normalizer<4,>=2
+  Downloading charset_normalizer-3.4.9-cp310-cp310-win_amd64.whl (162 kB)
+     ------------------------------------ 162.3/162.3 kB 608.3 kB/s eta 0:00:00
+Collecting certifi>=2023.5.7
+  Using cached certifi-2026.6.17-py3-none-any.whl (133 kB)
+Collecting urllib3<3,>=1.26
+  Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+     ------------------------------------ 131.1/131.1 kB 454.3 kB/s eta 0:00:00
+Collecting idna<4,>=2.5
+  Using cached idna-3.18-py3-none-any.whl (65 kB)
+Collecting packaging>=22
+  Using cached packaging-26.2-py3-none-any.whl (100 kB)
+Collecting pygments>=2.7.2
+  Using cached pygments-2.20.0-py3-none-any.whl (1.2 MB)
+Collecting iniconfig>=1.0.1
+  Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+Collecting colorama>=0.4
+  Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Collecting pluggy<2,>=1.5
+  Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+Collecting tomli>=1
+  Using cached tomli-2.4.1-py3-none-any.whl (14 kB)
+Collecting exceptiongroup>=1
+  Using cached exceptiongroup-1.3.1-py3-none-any.whl (16 kB)
+Collecting opt-einsum==3.3.0
+  Using cached opt_einsum-3.3.0-py3-none-any.whl (65 kB)
+Collecting typing-extensions
+  Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Collecting protobuf>=3.20.2
+  Using cached protobuf-7.35.1-cp310-abi3-win_amd64.whl (439 kB)
+Collecting safetensors>=0.6.0
+  Using cached safetensors-0.8.0-cp310-abi3-win_amd64.whl (355 kB)
+Collecting networkx
+  Downloading networkx-3.4.2-py3-none-any.whl (1.7 MB)
+     ---------------------------------------- 1.7/1.7 MB 656.3 kB/s eta 0:00:00
+Collecting httpx
+  Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Collecting termcolor
+  Using cached termcolor-3.3.0-py3-none-any.whl (7.7 kB)
+Collecting six
+  Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Collecting soupsieve>=1.6.1
+  Downloading soupsieve-2.8.4-py3-none-any.whl (37 kB)
+Collecting anyio
+  Using cached anyio-4.14.2-py3-none-any.whl (125 kB)
+Collecting httpcore==1.*
+  Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Collecting h11>=0.16
+  Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Collecting imageio
+  Using cached imageio-2.37.3-py3-none-any.whl (317 kB)
+Collecting scipy
+  Downloading scipy-1.15.3-cp310-cp310-win_amd64.whl (41.3 MB)
+     -------------------------------------- 41.3/41.3 MB 481.0 kB/s eta 0:00:00
+Collecting matplotlib
+  Downloading matplotlib-3.10.9-cp310-cp310-win_amd64.whl (8.2 MB)
+     ---------------------------------------- 8.2/8.2 MB 494.4 kB/s eta 0:00:00
+Collecting tifffile>=2022.8.12
+  Using cached tifffile-2025.5.10-py3-none-any.whl (226 kB)
+Collecting lazy-loader>=0.4
+  Using cached lazy_loader-0.5-py3-none-any.whl (8.0 kB)
+Collecting et-xmlfile
+  Using cached et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+Collecting PyMuPDF>=1.26.7
+  Using cached pymupdf-1.28.0-cp310-abi3-win_amd64.whl (19.8 MB)
+Collecting opencv-python-headless>=4.5
+  Downloading opencv_python_headless-5.0.0.93-cp37-abi3-win_amd64.whl (43.8 MB)
+     -------------------------------------- 43.8/43.8 MB 599.5 kB/s eta 0:00:00
+Collecting cssutils
+  Downloading cssutils-2.15.0-py3-none-any.whl (180 kB)
+     ------------------------------------ 180.6/180.6 kB 546.1 kB/s eta 0:00:00
+Collecting cachetools
+  Downloading cachetools-7.1.4-py3-none-any.whl (16 kB)
+Collecting cssselect
+  Downloading cssselect-1.4.0-py3-none-any.whl (18 kB)
+Collecting bce-python-sdk
+  Using cached bce_python_sdk-0.9.72-py3-none-any.whl (417 kB)
+Collecting psutil
+  Downloading psutil-7.2.2-cp37-abi3-win_amd64.whl (137 kB)
+     ------------------------------------ 137.7/137.7 kB 510.0 kB/s eta 0:00:00
+Collecting pandas
+  Using cached pandas-2.3.3-cp310-cp310-win_amd64.whl (11.3 MB)
+Collecting Flask-Babel>=3.0.0
+  Downloading flask_babel-4.0.0-py3-none-any.whl (9.6 kB)
+Collecting flask>=1.1.1
+  Downloading flask-3.1.3-py3-none-any.whl (103 kB)
+     ------------------------------------ 103.4/103.4 kB 459.0 kB/s eta 0:00:00
+Collecting rarfile
+  Downloading rarfile-4.3-py3-none-any.whl (29 kB)
+Collecting jinja2>=3.1.2
+  Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+     ------------------------------------ 134.9/134.9 kB 666.6 kB/s eta 0:00:00
+Collecting blinker>=1.9.0
+  Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Collecting werkzeug>=3.1.0
+  Using cached werkzeug-3.1.8-py3-none-any.whl (226 kB)
+Collecting markupsafe>=2.1.1
+  Downloading markupsafe-3.0.3-cp310-cp310-win_amd64.whl (15 kB)
+Collecting itsdangerous>=2.2.0
+  Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Collecting click>=8.1.3
+  Using cached click-8.4.2-py3-none-any.whl (119 kB)
+Collecting pytz>=2022.7
+  Using cached pytz-2026.2-py2.py3-none-any.whl (510 kB)
+Collecting Babel>=2.12
+  Downloading babel-2.18.0-py3-none-any.whl (10.2 MB)
+     -------------------------------------- 10.2/10.2 MB 467.7 kB/s eta 0:00:00
+Collecting opencv-python-headless>=4.5
+  Downloading opencv_python_headless-4.13.0.92-cp37-abi3-win_amd64.whl (40.1 MB)
+     ---------------------------------------- 40.1/40.1 MB 1.1 MB/s eta 0:00:00
+  Downloading opencv_python_headless-4.13.0.90-cp37-abi3-win_amd64.whl (40.1 MB)
+     -------------------------------------- 40.1/40.1 MB 766.8 kB/s eta 0:00:00
+  Downloading opencv_python_headless-4.12.0.88-cp37-abi3-win_amd64.whl (38.9 MB)
+     ---------------------------------------- 38.9/38.9 MB 1.1 MB/s eta 0:00:00
+  Downloading opencv_python_headless-4.11.0.86-cp37-abi3-win_amd64.whl (39.4 MB)
+     -------------------------------------- 39.4/39.4 MB 618.2 kB/s eta 0:00:00
+Collecting pycryptodome>=3.8.0
+  Using cached pycryptodome-3.23.0-cp37-abi3-win_amd64.whl (1.8 MB)
+Collecting future>=0.6.0
+  Using cached future-1.0.0-py3-none-any.whl (491 kB)
+Collecting crc32c>=2.2.post0
+  Using cached crc32c-2.8-cp310-cp310-win_amd64.whl (66 kB)
+Collecting encutils
+  Downloading encutils-1.0.0-py3-none-any.whl (21 kB)
+Collecting more_itertools
+  Downloading more_itertools-11.1.0-py3-none-any.whl (72 kB)
+     -------------------------------------- 72.2/72.2 kB 784.6 kB/s eta 0:00:00
+Collecting python-dateutil>=2.7
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+     ------------------------------------ 229.9/229.9 kB 585.7 kB/s eta 0:00:00
+Collecting kiwisolver>=1.3.1
+  Downloading kiwisolver-1.5.0-cp310-cp310-win_amd64.whl (73 kB)
+     -------------------------------------- 73.4/73.4 kB 671.8 kB/s eta 0:00:00
+Collecting contourpy>=1.0.1
+  Downloading contourpy-1.3.2-cp310-cp310-win_amd64.whl (221 kB)
+     -------------------------------------- 221.2/221.2 kB 1.1 MB/s eta 0:00:00
+Collecting pyparsing>=3
+  Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
+     ------------------------------------ 122.8/122.8 kB 803.9 kB/s eta 0:00:00
+Collecting cycler>=0.10
+  Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Collecting tzdata>=2022.7
+  Downloading tzdata-2026.3-py2.py3-none-any.whl (348 kB)
+     -------------------------------------- 348.2/348.2 kB 1.3 MB/s eta 0:00:00
+Collecting chardet
+  Using cached chardet-7.4.3-cp310-cp310-win_amd64.whl (942 kB)
+Installing collected packages: pytz, urllib3, tzdata, typing-extensions, tomli, termcolor, soupsieve, six, safetensors, rarfile, rapidfuzz, PyYAML, pyparsing, PyMuPDF, pygments, pycryptodome, pyclipper, psutil, protobuf, pluggy, Pillow, packaging, numpy, networkx, more_itertools, markupsafe, lxml, lmdb, kiwisolver, itsdangerous, iniconfig, idna, h11, future, fonttools, et-xmlfile, cython, cycler, cssselect, crc32c, colorama, charset_normalizer, chardet, certifi, cachetools, blinker, Babel, werkzeug, tqdm, tifffile, shapely, scipy, requests, python-docx, python-dateutil, opt-einsum, openpyxl, opencv-python-headless, opencv-python, opencv-contrib-python, lazy-loader, jinja2, imageio, httpcore, fire, exceptiongroup, encutils, contourpy, click, beautifulsoup4, bce-python-sdk, attrdict, scikit-image, pytest, pdf2docx, pandas, matplotlib, flask, cssutils, anyio, premailer, imgaug, httpx, Flask-Babel, visualdl, paddlepaddle, paddleocr
+Successfully installed Babel-2.18.0 Flask-Babel-4.0.0 Pillow-12.3.0 PyMuPDF-1.28.0 PyYAML-6.0.3 anyio-4.14.2 attrdict-2.0.1 bce-python-sdk-0.9.72 beautifulsoup4-4.15.0 blinker-1.9.0 cachetools-7.1.4 certifi-2026.6.17 chardet-7.4.3 charset_normalizer-3.4.9 click-8.4.2 colorama-0.4.6 contourpy-1.3.2 crc32c-2.8 cssselect-1.4.0 cssutils-2.15.0 cycler-0.12.1 cython-3.2.8 encutils-1.0.0 et-xmlfile-2.0.0 exceptiongroup-1.3.1 fire-0.7.1 flask-3.1.3 fonttools-4.63.0 future-1.0.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.18 imageio-2.37.3 imgaug-0.4.0 iniconfig-2.3.0 itsdangerous-2.2.0 jinja2-3.1.6 kiwisolver-1.5.0 lazy-loader-0.5 lmdb-2.3.0 lxml-6.1.1 markupsafe-3.0.3 matplotlib-3.10.9 more_itertools-11.1.0 networkx-3.4.2 numpy-1.26.4 opencv-contrib-python-4.6.0.66 opencv-python-4.6.0.66 opencv-python-headless-4.11.0.86 openpyxl-3.1.5 opt-einsum-3.3.0 packaging-26.2 paddleocr-2.7.3 paddlepaddle-3.3.1 pandas-2.3.3 pdf2docx-0.5.13 pluggy-1.6.0 premailer-3.10.0 protobuf-7.35.1 psutil-7.2.2 pyclipper-1.4.0 pycryptodome-3.23.0 pygments-2.20.0 pyparsing-3.3.2 pytest-9.1.1 python-dateutil-2.9.0.post0 python-docx-1.2.0 pytz-2026.2 rapidfuzz-3.14.5 rarfile-4.3 requests-2.34.2 safetensors-0.8.0 scikit-image-0.25.2 scipy-1.15.3 shapely-2.1.2 six-1.17.0 soupsieve-2.8.4 termcolor-3.3.0 tifffile-2025.5.10 tomli-2.4.1 tqdm-4.68.4 typing-extensions-4.16.0 tzdata-2026.3 urllib3-2.7.0 visualdl-2.5.3 werkzeug-3.1.8
+WARNING: There was an error checking the latest version of pip.

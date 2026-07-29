@@ -1,0 +1,67 @@
+# Component-Detection Pipeline — config (Stage 0)
+# Single source of truth for the detection-only vertical slice.
+# Separate from pipeline_config.yaml (Phase-1 camera/stitch config) — do NOT merge.
+# No MLflow / no Triton: "registry" = weights/VERSIONS.txt + git hash, pinned below.
+
+device: dgx_spark            # ARM SBSA, sm_121 — engines built ON device
+
+weights_dir: GPU/yolo/weights
+versions_file: GPU/yolo/weights/VERSIONS.txt
+
+# Filesystem registry: promotion = edit these filenames + restart worker.
+# Rollback = point back to prior filename. Keep last 2 weight sets on disk.
+active_versions:
+  backbone: shared_backbone_v1.pt
+  p1_head:  p1_side_v1.pt
+  p2_head:  p2_under_v1.pt
+  p3_head:  p3_bogie_v1.pt
+
+datasets:
+  root: GPU/yolo/datasets
+  zones: [p1, p2, p3]
+  union: union
+  pseudo_split_only: true     # pseudo/synthetic labels -> train split ONLY
+  exclude_classes: [leakage]  # all-synthetic, never ship
+
+confidence:
+  component: 0.35
+
+spine:
+  ground_truth: axle_count    # OCR is LABEL only, never the key
+  tau_ocr: 0.60               # below -> formation_fallback + coach-type classifier
+  position_source: encoder    # longitudinal_position_mm from encoder counts, NOT wall-clock
+  require_ptp: true           # ptp_t0 absent -> per-zone only, flag coverage=degraded
+
+voting:
+  k_of_n: 3
+  fuse_entry_exit: true
+  cell_size_mm: 100.0         # longitudinal quantization band for vote cells
+
+completeness:
+  missing_min_views: 2        # missing = 0 hits across >= this many views
+
+tiling:                       # gate cascade — tile ONLY inside the anomaly ROI
+  p2: {tile: 320, overlap: 0.20, gated: true}
+  p3: {sahi: false}           # P3 = wheel crops + slot checks, NEVER full-frame SAHI
+
+gate_tiers:                   # tier per specialist -> drives degrade order
+  crack_seg: structural
+  wheel_seg: safety
+  fastener: safety
+  detect: structural
+
+degrade:                      # bounded FIFO + shed-by-tier under pressure
+  order: [cosmetic, structural]     # SAFETY intentionally absent — never dropped
+  queue_high_watermark: 0.8
+  fifo_capacity: 4
+
+precision:
+  detectors: fp8              # INT8 fallback; FP16 if FP8 calibration not ready
+
+serving:
+  mode: single_process        # one resident Python worker, all engines in memory
+  fallback_weights: pt        # if .engine load fails, load .pt
+
+retention:
+  raw_days: 23
+  defects: permanent

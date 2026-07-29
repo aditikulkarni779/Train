@@ -1,0 +1,65 @@
+# Railway AI Inspection System — Phase-1 Orchestrator Configuration
+# Every tunable the managers use lives here (NFR-M3: no hardcoded site values).
+
+session_name: "Session_001"
+output_folder: "./output"
+
+cameras:
+  - name: "ocr_cam"          # Camera 12 in the full 12-camera ADS layout
+    source: "./sample_videos/OCR.mp4"
+    camera_type: "ocr"
+    target_fps: 15.0
+    # Native 1920x1080 — own resize target (16:9 preserved) instead of the
+    # global one below, which is sized for Cam1/Cam2's very different
+    # native aspect ratio. Without this override the OCR frame would get
+    # squeezed ~10x vertically down to the component cameras' target.
+    resize_width: 960
+    resize_height: 540
+  - name: "cam1"
+    source: "./sample_videos/Cam1.mp4"
+    camera_type: "component"
+    target_fps: 15.0
+  - name: "cam2"
+    source: "./sample_videos/Cam2.mp4"
+    camera_type: "component"
+    target_fps: 15.0
+  # To expand to all 12 cameras: add entries here with camera_type "component"
+  # (or a new type if a camera needs different handling) — no manager code
+  # changes required, per the ADS's plugin-style camera scalability rule.
+  # Give each camera its own resize_width/resize_height if its native
+  # resolution/aspect differs from the others (see ocr_cam above).
+
+ring_buffer_size: 300
+ring_buffer_duration_s: 30.0
+
+preprocessing_thread_count: 3
+# Global fallback — used by any camera that doesn't set its own resize_width/
+# height. Matches Cam1/Cam2 native size (848x100) so stitching geometry isn't
+# distorted; ocr_cam overrides this above since its native res/aspect differs.
+resize_width: 848
+resize_height: 100
+blur_score_threshold: 15.0   # starting guess for this resolution — tune from real blur_score logs
+
+yolo_service_url: "http://127.0.0.1:5002"
+yolo_request_timeout_s: 10.0
+
+gap_confidence_threshold: 0.4
+gap_cluster_window_ms: 800.0
+
+ocr_confidence_threshold: 0.4
+ocr_camera_sample_every_n: 1
+
+# Cameras are mounted vertically (top/bottom), per stitch.py at repo root —
+# NOT side-by-side. cam1 = top, cam2 = bottom for this rig.
+stitch_camera_top: "cam1"
+stitch_camera_bottom: "cam2"
+stitch_pair_epsilon_ms: 150.0
+stitch_overlap_ratio: 0.15          # 15% shared vertical band (GSD 0.15 mm/px rig calibration)
+stitch_use_feature_refinement: false # true = ORB-refine the offset for mechanical drift
+
+detection_confidence_threshold: 0.35
+
+enable_visualization: true
+visualization_refresh_ms: 500
+
+late_ocr_grace_period_ms: 5000.0

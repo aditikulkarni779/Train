@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "vb/inspection_report.schema.json",
+  "title": "InspectionReport (per coach) -> Report generator",
+  "description": "Final AI-unit output. Handed to Report generator within the 8-min budget.",
+  "type": "object",
+  "required": ["coach_index", "coach_type", "manifest_status", "defects", "coverage", "generated_at"],
+  "properties": {
+    "coach_index": { "type": "integer" },
+    "coach_number": { "type": ["string", "null"] },
+    "coach_type": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "latency_s": { "type": "number", "description": "input->this report; SLO track vs 8-min budget" },
+    "manifest_status": {
+      "type": "array",
+      "description": "present/missing/displaced per expected component (manifest diff on voted set)",
+      "items": {
+        "type": "object",
+        "required": ["component", "status"],
+        "properties": {
+          "component": { "type": "string" },
+          "status": { "type": "string", "enum": ["present", "missing", "displaced", "data_unavailable"] },
+          "views_seen": { "type": "integer" }
+        }
+      }
+    },
+    "defects": { "type": "array", "items": { "$ref": "vb/detection_record.schema.json" } },
+    "defect_map_ref": { "type": ["string", "null"], "description": "overlay image asset" },
+    "coverage": {
+      "type": "array",
+      "description": "per zone/region: inspected vs data_unavailable. NEVER report un-inspected as clean.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "zone": { "type": "string" },
+          "region": { "type": "string" },
+          "state": { "type": "string", "enum": ["inspected", "data_unavailable", "degraded"] }
+        }
+      }
+    },
+    "review_status": { "type": "string", "enum": ["auto_pass", "needs_review", "reviewed_confirmed", "reviewed_cleared"] },
+    "worst_tier": { "type": "string", "enum": ["cosmetic", "structural", "safety", "none"] }
+  }
+}
